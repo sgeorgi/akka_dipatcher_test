@@ -1,6 +1,7 @@
 package de.sgeorgi.tamon.hub.actors
 
 import akka.actor.Actor
+import de.sgeorgi.tamon.hub.modules.ConsoleLogger
 import spray.routing.HttpService
 
 /**
@@ -8,13 +9,13 @@ import spray.routing.HttpService
  */
 class RestServiceActor extends Actor with RestService {
   def actorRefFactory = context
-
   def receive = runRoute(myRoute)
 }
 
-trait RestService extends HttpService {
+trait RestService extends HttpService with ConsoleLogger {
   val myRoute =
     get {
+      log("Responding to / GET request")
       complete {
         <html>
           <body>
