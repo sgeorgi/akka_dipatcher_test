@@ -12,10 +12,19 @@ trait System {
   trait Orchestrator {
     this: L with P =>
 
-    def initialize() = {
-      log("Orchestrator initialized")
+    def workOnMessage(m: Message) = {
+      log("Reveived Message from " + m.sender + " for Service " + m.service + ": " + m.message)
+      persist(m)
     }
   }
+}
 
+object HubSystem extends System {
+  type L = ConsoleLogger
+  type P = Persistable
+
+  object WorkFlow extends Orchestrator with ConsoleLogger with Persistable
+
+  def apply(m: Message) = WorkFlow.workOnMessage(m)
 }
 
