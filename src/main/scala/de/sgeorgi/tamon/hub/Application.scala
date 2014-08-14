@@ -12,7 +12,7 @@ object Application extends App {
 
   val actorSystem = ActorSystem("tamon-hub")
 
-  val dispatcher = actorSystem.actorOf(Props(new Dispatcher))
-  dispatcher ! StartSocketServer()
-  dispatcher ! StartRestServer()
+  val dispatcher = actorSystem.actorOf(Props(new Dispatcher with Hub), "dispatcher")
+  dispatcher ! StartSocketServer
+  dispatcher ! StartRestServer
 }
