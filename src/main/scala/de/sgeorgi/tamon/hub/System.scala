@@ -28,3 +28,11 @@ object HubSystem extends System {
   def apply(m: Message) = WorkFlow.workOnMessage(m)
 }
 
+object TestHubSystem extends System {
+  type L = NullLogger
+  type P = Persistable
+
+  object WorkFlow extends Orchestrator with NullLogger with Persistable
+
+  def apply(m: Message) = WorkFlow.workOnMessage(m)
+}

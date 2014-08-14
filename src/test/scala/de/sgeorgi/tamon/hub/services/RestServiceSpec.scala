@@ -1,19 +1,8 @@
 package de.sgeorgi.tamon.hub.services
 
-import de.sgeorgi.tamon.hub.modules.{NullLogger, Persistable}
-import de.sgeorgi.tamon.hub.{UnitSpec, Message, System}
+import de.sgeorgi.tamon.hub.{Message, TestHubSystem, UnitSpec}
 import spray.http.{FormData, StatusCodes}
 import spray.testkit.ScalatestRouteTest
-
-/**
- * Creating a TestHubSystem and a TestRestService
- */
-object TestHubSystem extends System {
-  type L = NullLogger
-  type P = Persistable
-
-  object WorkFlow extends Orchestrator with NullLogger with Persistable
-}
 
 trait TestRestService extends RestService {
   override val callback = (m: Message) => TestHubSystem.WorkFlow.workOnMessage(m)
