@@ -12,7 +12,7 @@ trait System {
   trait Orchestrator {
     this: L with P =>
 
-    def initialize = {
+    def initialize() = {
       log("Orchestrator initialized")
     }
   }

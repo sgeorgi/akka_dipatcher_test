@@ -1,4 +1,4 @@
-import de.sgeorgi.tamon.hub.{LogMessage, Message, UnitSpec, UnknownMessage}
+package de.sgeorgi.tamon.hub
 
 /**
  * Created by sgeorgi on 13.08.14.

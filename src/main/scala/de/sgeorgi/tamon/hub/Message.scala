@@ -10,9 +10,9 @@ sealed trait Message {
   val message: String
 }
 
-case class LogMessage(val sender: String, val service: String, val message: String) extends Message
+case class LogMessage(sender: String, service: String, message: String) extends Message
 
-case class UnknownMessage(val message: String) extends Message {
+case class UnknownMessage(message: String) extends Message {
   val sender, service = ""
 }
 
@@ -23,8 +23,6 @@ object Message {
     val Count = 2: Int
     val Unknown = 999: Int
   }
-
-  implicit
 
   def decode(incoming: String): Message = {
     def parseMessageType(s: String) = {
