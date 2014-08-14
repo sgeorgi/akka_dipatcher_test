@@ -5,6 +5,6 @@ import de.sgeorgi.tamon.hub.Message
 /**
  * Created by sgeorgi on 13.08.14.
  */
-trait Persistable {
+trait Persistor {
   def persist(m: Message): Unit = {}
 }

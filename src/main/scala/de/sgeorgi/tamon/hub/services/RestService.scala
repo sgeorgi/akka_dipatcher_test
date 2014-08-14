@@ -1,19 +1,20 @@
 package de.sgeorgi.tamon.hub.services
 
-import de.sgeorgi.tamon.hub.{HubSystem, Message}
+import akka.actor.ActorRefFactory
+import de.sgeorgi.tamon.hub.modules.{NullLogger, Persistor}
+import de.sgeorgi.tamon.hub.{HubLogic, Message}
 import spray.routing.HttpService
 
 /**
  * Created by sgeorgi on 14.08.14.
  */
 trait RestService extends HttpService {
-  val callback = (m: Message) => HubSystem.WorkFlow.workOnMessage(m)
-
+  this: HubLogic =>
   val myRoute =
     formField("message") { (message) =>
 
       val msg: Message = Message.decode(message)
-      callback(msg)
+      workOnMessage(msg)
 
       post {
         complete {

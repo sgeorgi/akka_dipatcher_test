@@ -1,15 +1,12 @@
 package de.sgeorgi.tamon.hub.services
 
-import de.sgeorgi.tamon.hub.{Message, TestHubSystem, UnitSpec}
+import de.sgeorgi.tamon.hub.{TestHub, UnitSpec}
 import spray.http.{FormData, StatusCodes}
 import spray.testkit.ScalatestRouteTest
 
-trait TestRestService extends RestService {
-  override val callback = (m: Message) => TestHubSystem.WorkFlow.workOnMessage(m)
-}
 
 /* The actual Test*/
-class RestServiceSpec extends UnitSpec with ScalatestRouteTest with TestRestService {
+class RestServiceSpec extends UnitSpec with ScalatestRouteTest with RestService with TestHub {
   def actorRefFactory = actorTestSystem
 
   describe("RestService") {
