@@ -5,21 +5,22 @@ package de.sgeorgi.tamon.hub.modules
  * See ConsoleLogger for an implementation!
  */
 sealed trait Logger {
-  val method: (String => Unit)
-  def log(s: String): Unit = method(s)
+  type Callback[String] = (String) => Unit
+
+  val logMethod: Callback[String]
+  def log(s: String): Unit = logMethod(s)
 }
 
 /**
  * ConsoleLogger provides a println method to Logging
  */
 trait ConsoleLogger extends Logger {
-  val method: (String => Unit) = println
+  val logMethod: Callback[String] = (x: String) => println(x)
 }
 
 /**
  * Null logger provives a method 'doNothing' to Logger
  */
 trait NullLogger extends Logger {
-  val method: (String => Unit) = doNothing
-  def doNothing(x: Any): Unit
+  val logMethod: Callback[String] = (x: String) => {}
 }
