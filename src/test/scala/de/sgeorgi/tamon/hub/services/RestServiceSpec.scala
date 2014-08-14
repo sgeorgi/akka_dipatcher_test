@@ -1,8 +1,8 @@
-package de.sgeorgi.tamon.hub.actors
+package de.sgeorgi.tamon.hub.services
 
-import de.sgeorgi.tamon.hub.{Message, UnitSpec, System}
 import de.sgeorgi.tamon.hub.modules.{NullLogger, Persistable}
-import spray.http.{StatusCodes, FormData}
+import de.sgeorgi.tamon.hub.{UnitSpec, Message, System}
+import spray.http.{FormData, StatusCodes}
 import spray.testkit.ScalatestRouteTest
 
 /**

@@ -1,11 +1,12 @@
 package de.sgeorgi.tamon.hub.actors
 
-import akka.actor.{Props, ActorSystem, Actor}
+import akka.actor.{Actor, ActorSystem, Props}
 import akka.io.IO
+import akka.pattern.ask
 import akka.util.Timeout
 import de.sgeorgi.tamon.hub.modules.ConsoleLogger
 import spray.can.Http
-import akka.pattern.ask
+
 import scala.concurrent.duration._
 
 /**
