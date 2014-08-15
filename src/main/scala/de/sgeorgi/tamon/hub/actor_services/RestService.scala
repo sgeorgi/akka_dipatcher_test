@@ -13,9 +13,7 @@ class RestService(val dispatcher: ActorRef) extends Actor with Service with Http
   val myRoute =
     formField("message") {
       (message) =>
-
-        val msg: IncomingMessage = IncomingMessage.decode(message)
-        dispatcher ! MessageReceived(msg)
+        parseAndDispatch(message)
 
         post {
           complete {

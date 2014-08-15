@@ -4,7 +4,6 @@ import akka.actor.{Actor, ActorSystem, Props}
 import akka.io.IO
 import akka.pattern.ask
 import akka.util.Timeout
-import de.sgeorgi.tamon.hub.ActorMessages._
 import spray.can.Http
 
 import scala.concurrent.duration._
@@ -19,10 +18,4 @@ class Dispatcher extends Actor with HubService {
   val socketServiceRef = context.actorOf(Props(new SocketService(self)), "socket-service")
 
   IO(Http) ? Http.Bind(restServiceRef, interface = "localhost", port = 8080)
-
-  def receive = {
-    case MessageReceived(message) =>
-      println("Dispatcher received Message from '" + message.sender + "'")
-  }
-
 }
