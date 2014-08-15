@@ -1,9 +1,8 @@
-package de.sgeorgi.tamon.hub.actor_services
+package de.sgeorgi.tamon.hub
 
 import akka.actor.Actor.Receive
 import akka.actor.ActorRef
-import de.sgeorgi.tamon.hub.ActorMessages.{LogMessage, PersistMessage, MessageReceived}
-import de.sgeorgi.tamon.hub.IncomingMessage
+import de.sgeorgi.tamon.hub.ActorMessages.{LogMessage, MessageReceived, PersistMessage}
 
 /**
  * Created by sgeorgi on 15.08.14.
@@ -28,7 +27,7 @@ trait Processor {
   }
 }
 
-trait HubService {
+trait Dispatcher {
   val restServiceRef: ActorRef
   val socketServiceRef: ActorRef
   val persistProcessorRef: ActorRef
@@ -36,7 +35,7 @@ trait HubService {
 
   def receive: Receive = {
     case MessageReceived(message) =>
-      println("Dispatcher received Message from '" + message.sender + "'")
+      println("Dispatcher received Message from '" + message.sender + "', dispatching to Processors")
       persistProcessorRef ! PersistMessage(message)
       loggingProcessorRef ! LogMessage(message)
   }

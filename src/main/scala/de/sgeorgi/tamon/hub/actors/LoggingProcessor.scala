@@ -1,6 +1,7 @@
-package de.sgeorgi.tamon.hub.actor_services
+package de.sgeorgi.tamon.hub.actors
 
 import akka.actor.{Actor, ActorRef}
+import de.sgeorgi.tamon.hub.Processor
 
 /**
  * Created by sgeorgi on 15.08.14.

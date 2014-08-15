@@ -1,14 +1,15 @@
-package de.sgeorgi.tamon.hub.actor_services
+package de.sgeorgi.tamon.hub.actors
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.io.IO
 import akka.pattern.ask
 import akka.util.Timeout
+import de.sgeorgi.tamon.hub.Dispatcher
 import spray.can.Http
 
 import scala.concurrent.duration._
 
-class Dispatcher extends Actor with HubService {
+class DispatcherService extends Actor with Dispatcher {
   implicit val actorSystem = ActorSystem("tamon-hub")
   implicit val timeout = Timeout(5.seconds)
 

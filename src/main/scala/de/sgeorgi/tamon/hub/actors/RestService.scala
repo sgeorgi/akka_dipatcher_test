@@ -1,8 +1,7 @@
-package de.sgeorgi.tamon.hub.actor_services
+package de.sgeorgi.tamon.hub.actors
 
 import akka.actor.{Actor, ActorRef}
-import de.sgeorgi.tamon.hub.ActorMessages.MessageReceived
-import de.sgeorgi.tamon.hub.IncomingMessage
+import de.sgeorgi.tamon.hub.Service
 import spray.routing.HttpService
 
 class RestService(val dispatcher: ActorRef) extends Actor with Service with HttpService {
