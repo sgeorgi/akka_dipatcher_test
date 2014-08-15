@@ -1,30 +1,26 @@
 package de.sgeorgi.tamon.hub
 
-/**
- * Created by sgeorgi on 13.08.14.
- */
-
-sealed trait Message {
+sealed trait IncomingMessage {
   val sender: String
   val service: String
   val message: String
 }
 
-case class LogMessage(sender: String, service: String, message: String) extends Message
+object IncomingMessage {
 
-case class UnknownMessage(message: String) extends Message {
-  val sender, service = ""
-}
+  case class LogMessage(sender: String, service: String, message: String) extends IncomingMessage
 
-object Message {
-
-  object Types {
-    val Log = 1: Int
-    val Count = 2: Int
-    val Unknown = 999: Int
+  case class UnknownMessage(message: String) extends IncomingMessage {
+    val sender, service = ""
   }
 
-  def decode(incoming: String): Message = {
+  def decode(incoming: String): IncomingMessage = {
+    object Types {
+      val Log = 1: Int
+      val Count = 2: Int
+      val Unknown = 999: Int
+    }
+
     def parseMessageType(s: String) = {
       def typeStringToInt(s: String): Int = s match {
         case _ if s.matches("\\d+") => Integer.parseInt(s)

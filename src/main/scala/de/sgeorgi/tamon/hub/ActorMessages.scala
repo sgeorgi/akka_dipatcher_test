@@ -6,5 +6,5 @@ package de.sgeorgi.tamon.hub
 object ActorMessages {
   case object StartSocketServer
   case object StartRestServer
-  case class MessageReceived(m: Message)
+  case class MessageReceived(m: IncomingMessage)
 }

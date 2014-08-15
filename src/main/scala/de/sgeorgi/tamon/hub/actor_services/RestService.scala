@@ -2,7 +2,7 @@ package de.sgeorgi.tamon.hub.actor_services
 
 import akka.actor.{Actor, ActorRef}
 import de.sgeorgi.tamon.hub.ActorMessages.MessageReceived
-import de.sgeorgi.tamon.hub.Message
+import de.sgeorgi.tamon.hub.IncomingMessage
 import spray.routing.HttpService
 
 class RestService(val dispatcher: ActorRef) extends Actor with Service with HttpService {
@@ -14,7 +14,7 @@ class RestService(val dispatcher: ActorRef) extends Actor with Service with Http
     formField("message") {
       (message) =>
 
-        val msg: Message = Message.decode(message)
+        val msg: IncomingMessage = IncomingMessage.decode(message)
         dispatcher ! MessageReceived(msg)
 
         post {
