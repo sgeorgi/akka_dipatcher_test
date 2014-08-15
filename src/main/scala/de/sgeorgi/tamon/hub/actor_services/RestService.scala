@@ -1,14 +1,11 @@
-package de.sgeorgi.tamon.hub.actors
+package de.sgeorgi.tamon.hub.actor_services
 
-import akka.actor.{ActorRef, Actor}
+import akka.actor.{Actor, ActorRef}
+import de.sgeorgi.tamon.hub.ActorMessages.MessageReceived
 import de.sgeorgi.tamon.hub.Message
-import de.sgeorgi.tamon.hub.actors.ActorMessages.MessageReceived
 import spray.routing.HttpService
 
-/**
- * Created by sgeorgi on 13.08.14.
- */
-class RestServiceActor(val dispatcher: ActorRef) extends Actor with HttpService {
+class RestService(val dispatcher: ActorRef) extends Actor with Service with HttpService {
   def actorRefFactory = context
 
   def receive = runRoute(myRoute)
@@ -33,5 +30,3 @@ class RestServiceActor(val dispatcher: ActorRef) extends Actor with HttpService 
         }
     }
 }
-
-
