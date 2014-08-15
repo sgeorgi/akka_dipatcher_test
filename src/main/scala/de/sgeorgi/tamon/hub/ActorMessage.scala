@@ -1,7 +1,7 @@
 package de.sgeorgi.tamon.hub
 
 /**
- * Created by sgeorgi on 15.08.14.
+ * Object for holding Message classes for communication between Actors
  */
 object ActorMessage {
   case class MessageReceived(m: Message)

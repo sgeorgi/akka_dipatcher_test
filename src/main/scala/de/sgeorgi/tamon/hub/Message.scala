@@ -1,11 +1,17 @@
 package de.sgeorgi.tamon.hub
 
+/**
+ * Default protocol for incoming messages
+ */
 sealed trait Message {
   val sender: String
   val service: String
   val message: String
 }
 
+/**
+ * Message object to hold decoding, type-maching and conversion into default-messages
+ */
 object Message {
 
   case class LogMessage(sender: String, service: String, message: String) extends Message
@@ -14,6 +20,13 @@ object Message {
     val sender, service = ""
   }
 
+  /**
+   * Decodes a given String into a Message object. Uses Types to distiguish between resulting Message subclasses and
+   * always returns an UnkownMessage unless parseable.
+   *
+   * @param incoming a String
+   * @return the parsed message
+   */
   def decode(incoming: String): Message = {
     object Types {
       val Log = 1: Int

@@ -11,6 +11,10 @@ import spray.can.Http
 
 import scala.concurrent.duration._
 
+/**
+ * Actor for the DispatcherSerice. Implements the Dispatcher interface by providing necessary ActorRefs and Binds
+ * outward APIs.
+ */
 class DispatcherServiceActor extends Actor with Dispatcher {
   implicit val actorSystem = ActorSystem("tamon-hub")
   implicit val timeout = Timeout(5.seconds)
