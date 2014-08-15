@@ -2,17 +2,16 @@ package de.sgeorgi.tamon.hub
 
 import akka.actor.Actor.Receive
 import akka.actor.ActorRef
-import de.sgeorgi.tamon.hub.ActorMessages.{LogMessage, MessageReceived, PersistMessage}
 
-/**
- * Created by sgeorgi on 15.08.14.
- */
 trait Service {
   val dispatcher: ActorRef
 
-  def parseAndDispatch(m: String): Unit = {
-    val msg: IncomingMessage = IncomingMessage.decode(m)
-    dispatcher ! MessageReceived(msg)
+  def parseAndDispatch(messageString: String): Unit = {
+    val message: Message = Message.decode(messageString)
+    message match {
+      case m: Message.LogMessage => dispatcher ! ActorMessage.MessageReceived(m)
+      case m: Message.UnknownMessage =>
+    }
   }
 }
 
@@ -20,9 +19,9 @@ trait Processor {
   val dispatcher: ActorRef
 
   def receive: Receive = {
-    case PersistMessage(m: IncomingMessage) =>
+    case ActorMessage.PersistMessage(m: Message) =>
       println("Received IncomingMessage for persisting")
-    case LogMessage(m: IncomingMessage) =>
+    case ActorMessage.LogMessage(m: Message) =>
       println("Received IncomingMessage for logging")
   }
 }
@@ -34,9 +33,9 @@ trait Dispatcher {
   val loggingProcessorRef: ActorRef
 
   def receive: Receive = {
-    case MessageReceived(message) =>
+    case ActorMessage.MessageReceived(message) =>
       println("Dispatcher received Message from '" + message.sender + "', dispatching to Processors")
-      persistProcessorRef ! PersistMessage(message)
-      loggingProcessorRef ! LogMessage(message)
+      persistProcessorRef ! ActorMessage.PersistMessage(message)
+      loggingProcessorRef ! ActorMessage.LogMessage(message)
   }
 }

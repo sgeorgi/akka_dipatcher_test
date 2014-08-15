@@ -4,7 +4,7 @@ import akka.actor.{Actor, ActorRef}
 import de.sgeorgi.tamon.hub.Service
 import spray.routing.HttpService
 
-class RestService(val dispatcher: ActorRef) extends Actor with Service with HttpService {
+class RestServiceActor(val dispatcher: ActorRef) extends Actor with Service with HttpService {
   def actorRefFactory = context
 
   def receive = runRoute(myRoute)
@@ -12,6 +12,7 @@ class RestService(val dispatcher: ActorRef) extends Actor with Service with Http
   val myRoute =
     formField("message") {
       (message) =>
+        /* Call Logic of Service-Trait*/
         parseAndDispatch(message)
 
         post {

@@ -1,20 +1,20 @@
 package de.sgeorgi.tamon.hub
 
-sealed trait IncomingMessage {
+sealed trait Message {
   val sender: String
   val service: String
   val message: String
 }
 
-object IncomingMessage {
+object Message {
 
-  case class LogMessage(sender: String, service: String, message: String) extends IncomingMessage
+  case class LogMessage(sender: String, service: String, message: String) extends Message
 
-  case class UnknownMessage(message: String) extends IncomingMessage {
+  case class UnknownMessage(message: String) extends Message {
     val sender, service = ""
   }
 
-  def decode(incoming: String): IncomingMessage = {
+  def decode(incoming: String): Message = {
     object Types {
       val Log = 1: Int
       val Count = 2: Int
