@@ -5,6 +5,10 @@ import akka.io.Tcp._
 import akka.util.ByteString
 import de.sgeorgi.tamon.hub.Service
 
+object SocketServiceActor {
+  def props(dispatcher: ActorRef): Props = Props(new SocketServiceActor(dispatcher))
+}
+
 /**
  * Actor for the Socket service. Listens to bound address/port and spawns a new SocketHandler Actor upon new client
  * connection.
@@ -19,10 +23,14 @@ class SocketServiceActor(val dispatcher: ActorRef) extends Actor with SocketImpl
     case CommandFailed(_: Bind) => context stop self
 
     case c@Connected(remote, local) =>
-      val handler = context.actorOf(Props(new SocketHandler(dispatcher)))
+      val handler = context.actorOf(SocketHandler.props(dispatcher))
       val connection = sender()
       connection ! Register(handler)
   }
+}
+
+object SocketHandler {
+  def props(dispatcher: ActorRef): Props = Props(new SocketHandler(dispatcher))
 }
 
 /**

@@ -2,7 +2,7 @@ package de.sgeorgi.tamon.hub.actors
 
 import java.net.InetSocketAddress
 
-import akka.actor.{Actor, ActorSystem, Props}
+import akka.actor.{Actor, ActorSystem}
 import akka.io.{IO, Tcp}
 import akka.pattern.ask
 import akka.util.Timeout
@@ -19,10 +19,10 @@ class DispatcherServiceActor extends Actor with Dispatcher {
   implicit val actorSystem = ActorSystem("tamon-hub")
   implicit val timeout = Timeout(5.seconds)
 
-  val persistProcessorRef = context.actorOf(Props(new PersistProcessorActor(self)), "persist-processor")
-  val loggingProcessorRef = context.actorOf(Props(new LoggingProcessorActor(self)), "logging-processor")
-  val restServiceRef = context.actorOf(Props(new RestServiceActor(self)))
-  val socketServiceRef = context.actorOf(Props(new SocketServiceActor(self)), "socket-service")
+  val persistProcessorRef = context.actorOf(PersistProcessorActor.props(self), "persist-processor")
+  val loggingProcessorRef = context.actorOf(LoggingProcessorActor.props(self), "logging-processor")
+  val restServiceRef = context.actorOf(RestServiceActor.props(self), "rest-service")
+  val socketServiceRef = context.actorOf(SocketServiceActor.props(self), "socket-service")
 
   IO(Http) ? Http.Bind(restServiceRef, interface = "localhost", port = 8080)
   IO(Tcp) ? Tcp.Bind(socketServiceRef, new InetSocketAddress("localhost", 8081))
