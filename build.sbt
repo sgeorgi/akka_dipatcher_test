@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
   "io.spray"            %   "spray-testkit_2.11" % "1.3.1" % "test",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
-  "org.reactivemongo" %% "reactivemongo" % "0.11.0-SNAPSHOT"
+  "org.reactivemongo" %% "reactivemongo" % "0.10.5.akka23-SNAPSHOT"
 )
 
 Revolver.settings
