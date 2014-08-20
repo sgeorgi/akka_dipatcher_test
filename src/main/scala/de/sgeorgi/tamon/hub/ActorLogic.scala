@@ -14,7 +14,7 @@ trait Service {
   def parseAndDispatch(messageString: String): Unit = {
     val message: Message = Message.decode(messageString)
     message match {
-      case m: Message.LogMessage => dispatcher ! ActorMessage.MessageReceived(m)
+      case m: Message.LogMessage => dispatcher ! ActorMessage.AMessageReceived(m)
       case m: Message.UnknownMessage =>
     }
   }
@@ -29,10 +29,9 @@ trait Processor {
   val dispatcher: ActorRef
 
   def receive: Receive = {
-    case ActorMessage.PersistMessage(m: Message) =>
-      println("Received IncomingMessage for persisting")
-    case ActorMessage.LogMessage(m: Message) =>
-      println("Received IncomingMessage for logging")
+    case ActorMessage.APersistMessage(m: Message.LogMessage) =>
+      Database.insertMessage(m)
+    case ActorMessage.ALogMessage(m: Message) =>
   }
 }
 
@@ -49,9 +48,8 @@ trait Dispatcher {
   val loggingProcessorRef: ActorRef
 
   def receive: Receive = {
-    case ActorMessage.MessageReceived(message) =>
-      println("Dispatcher received Message from '" + message.sender + "', dispatching to Processors")
-      persistProcessorRef ! ActorMessage.PersistMessage(message)
-      loggingProcessorRef ! ActorMessage.LogMessage(message)
+    case ActorMessage.AMessageReceived(message) =>
+      persistProcessorRef ! ActorMessage.APersistMessage(message)
+      loggingProcessorRef ! ActorMessage.ALogMessage(message)
   }
 }
