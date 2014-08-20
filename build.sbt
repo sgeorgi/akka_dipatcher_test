@@ -1,6 +1,6 @@
 organization := "de.sgeorgi"
 
-name := "tamon-hub"
+name := "akka_dispatcher_test"
 
 version := "0.1-SNAPSHOT"
 
